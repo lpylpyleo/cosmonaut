@@ -1,0 +1,11 @@
+{
+  "appName": "Cosmonaut",
+  "register": "Register",
+  "login": "Login",
+  "forgot_password": "Forgot Password?",
+  "sign_up": "Sign up",
+  "need_register": "Don't have an account yet?",
+  "already_have_account": "Already have a account? Log In",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
+}

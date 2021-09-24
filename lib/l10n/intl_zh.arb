@@ -1,0 +1,11 @@
+{
+  "appName": "Cosmonaut",
+  "register": "注册",
+  "login": "登陆",
+  "forgot_password": "忘记密码？",
+  "sign_up": "快速注册",
+  "need_register": "还没有账号？",
+  "already_have_account": "已有账号？",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
+}

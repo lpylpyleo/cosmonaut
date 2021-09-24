@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "854936357084",
+    "project_id": "cosmonaut-bc5e7",
+    "storage_bucket": "cosmonaut-bc5e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854936357084:android:dc844d4c78c3ae93c84c19",
+        "android_client_info": {
+          "package_name": "com.daytime_dreamer.cosmonaut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854936357084-kcus4kcpsl0spu3k0dgsa7an4degnmd9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daytime_dreamer.cosmonaut",
+            "certificate_hash": "7ffa1b812a6b70485848d5055d50f7cf0638aecb"
+          }
+        },
+        {
+          "client_id": "854936357084-242e2k9gbmv4ao8rbfs2fkg7n2taodlt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ3SGzKZhbkAJZt8Vy5JWN138sUV8Y_NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854936357084-242e2k9gbmv4ao8rbfs2fkg7n2taodlt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
