@@ -1,5 +1,6 @@
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
+import 'package:cosmonaut/pages/tab/square.dart';
 import 'package:cosmonaut/widgets/a_app_bar.dart';
 import 'package:cosmonaut/widgets/starry_sky.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +29,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
     tabs = [
       _TabConfig(
         0,
-        LineIcons.star,
+        LineIcons.squareWave,
         () {
           currentIndex.value = 0;
           tabController.index = 0;
@@ -51,15 +52,9 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
       appBar: AAppBar(title: S.current.appName),
       body: TabBarView(
         controller: tabController,
-        children: [
-          ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return const FlutterLogo(
-                size: 100,
-              );
-            },
-          ),
-          const StarrySky(),
+        children: const [
+          SquareTab(),
+          StarrySky(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
