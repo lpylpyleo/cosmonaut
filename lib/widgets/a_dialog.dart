@@ -3,7 +3,7 @@ import 'package:cosmonaut/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'atext.dart';
+import 'a_text.dart';
 
 class ADialog extends StatelessWidget {
   final String? title;
@@ -18,15 +18,15 @@ class ADialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.grey[600],
+      backgroundColor: Colors.grey[500],
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+        padding: const EdgeInsets.fromLTRB(8, 32, 8, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (title != null) AText(title!, fontSize: 16),
-            if (message != null) const SizedBox(height: 16),
-            if (message != null) AText(message!, fontSize: 14),
+            if (title != null) AText(title!, fontSize: 16, textAlign: TextAlign.center),
+            if (message != null) const SizedBox(height: 32),
+            if (message != null) AText(message!, fontSize: 14, textAlign: TextAlign.center),
             const SizedBox(height: 16),
             ElevatedButton(
               style: ButtonStyle(

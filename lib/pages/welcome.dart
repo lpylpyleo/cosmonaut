@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
-import 'package:cosmonaut/widgets/atext.dart';
+import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -13,6 +16,27 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer(const Duration(seconds: 3), () {
+      Get.offAllNamed(Routes.login, predicate: (_) => false);
+    });
+
+    if(Supabase.instance.client.auth.session() != null){
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        Get.offAllNamed(Routes.main, predicate: (_) => false);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {

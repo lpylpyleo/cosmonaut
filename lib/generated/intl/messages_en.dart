@@ -26,12 +26,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "appName": MessageLookupByLibrary.simpleMessage("Cosmonaut"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirm_email": MessageLookupByLibrary.simpleMessage(
+            "An email has been sent to your email address. Please confirm."),
         "forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "need_register":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account yet?"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
-        "sign_up": MessageLookupByLibrary.simpleMessage("Sign up")
+        "reset": MessageLookupByLibrary.simpleMessage("Reset"),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error.")
       };
 }

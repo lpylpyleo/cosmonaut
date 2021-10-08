@@ -7,5 +7,8 @@
   "need_register": "Don't have an account yet?",
   "already_have_account": "Already have a account? Log In",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "confirm_email": "An email has been sent to your email address. Please confirm.",
+  "reset": "Reset",
+  "unknown_error": "Unknown error."
 }

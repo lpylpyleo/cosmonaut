@@ -2,15 +2,16 @@ import 'dart:developer';
 
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/utils/logger.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:gotrue/gotrue.dart';
 import 'package:logging/logging.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
+import 'core/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,18 +26,30 @@ void main() async {
     log('${record.time}: ${record.message}', name: record.level.name);
   });
 
-  await Firebase.initializeApp();
-  FirebaseAuth.instance.idTokenChanges().listen((User? user) {
-    if (user == null) {
-      logger.info('User is currently signed out!');
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        Get.offAllNamed(Routes.login, predicate: (route) => false);
-      });
-    } else {
-      logger.info('User is signed in!');
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        Get.offAllNamed(Routes.main, predicate: (route) => false);
-      });
+  await Supabase.initialize(
+    url: C.supabaseUrl,
+    anonKey: C.supabaseAnnonKey,
+    authCallbackUrlHostname: 'login-callback', // optional
+  );
+
+  Supabase.instance.client.auth.onAuthStateChange((event, session) {
+    logger.info('onAuthStateChange: $event.');
+
+    switch(event){
+      case AuthChangeEvent.signedIn:
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          Get.offAllNamed(Routes.main, predicate: (_) => false);
+        });
+        break;
+      case AuthChangeEvent.signedOut:
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          Get.offAllNamed(Routes.login, predicate: (_) => false);
+        });
+        break;
+      case AuthChangeEvent.userUpdated:
+        break;
+      case AuthChangeEvent.passwordRecovery:
+        break;
     }
   });
 

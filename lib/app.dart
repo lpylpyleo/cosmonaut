@@ -17,10 +17,12 @@ class MyApp extends StatelessWidget {
       title: "Cosmonaut",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // primarySwatch: Colors.cyan,
         brightness: Brightness.dark,
         primaryColor: Style.gold,
         platform: TargetPlatform.iOS,
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Style.gold,
+        ),
       ),
       localizationsDelegates: const [
         AppLocalizationDelegate(),

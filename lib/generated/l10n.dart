@@ -139,6 +139,36 @@ class S {
       args: [],
     );
   }
+
+  /// `An email has been sent to your email address. Please confirm.`
+  String get confirm_email {
+    return Intl.message(
+      'An email has been sent to your email address. Please confirm.',
+      name: 'confirm_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message(
+      'Reset',
+      name: 'reset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error.`
+  String get unknown_error {
+    return Intl.message(
+      'Unknown error.',
+      name: 'unknown_error',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

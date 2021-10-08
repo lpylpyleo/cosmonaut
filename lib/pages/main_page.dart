@@ -15,13 +15,38 @@ class MainPage extends StatefulHookWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
   final currentIndex = 0.obs;
+  late final TabController tabController;
+
+  late final List<_TabConfig> tabs;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+    tabs = [
+      _TabConfig(
+        0,
+        LineIcons.star,
+        () {
+          currentIndex.value = 0;
+          tabController.index = 0;
+        },
+      ),
+      _TabConfig(
+        1,
+        LineIcons.userAstronaut,
+        () {
+          currentIndex.value = 1;
+          tabController.index = 1;
+        },
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    final tabController = useTabController(initialLength: 2);
-
     return Scaffold(
       appBar: AAppBar(title: S.current.appName),
       body: TabBarView(
@@ -37,23 +62,36 @@ class _MainPageState extends State<MainPage> {
           const StarrySky(),
         ],
       ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: currentIndex.value,
-          onTap: (i) {
-             currentIndex.value = i;
-             tabController.index = i;
-          },
-          iconSize: 24,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          selectedItemColor: Style.gold,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(LineIcons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(LineIcons.user), label: 'Me'),
-          ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(LineIcons.spaceShuttle),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        elevation: 4,
+        shape: const CircularNotchedRectangle(),
+        color: Colors.grey[800],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: tabs
+              .map((e) => Obx(
+                    () => IconButton(
+                      onPressed: e.onTap,
+                      icon: Icon(e.icon),
+                      color: currentIndex.value == e.index ? Style.gold : null,
+                    ),
+                  ))
+              .toList(),
         ),
       ),
     );
   }
+}
+
+class _TabConfig {
+  final int index;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _TabConfig(this.index, this.icon, this.onTap);
 }

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:cosmonaut/widgets/atext.dart';
+import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:flutter/material.dart';
 
 class AAppBar extends StatelessWidget implements PreferredSizeWidget {

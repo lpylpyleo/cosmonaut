@@ -1,8 +1,10 @@
 class C {
-  static const supabaseUrl = 'https://apsceiorpinbtavtjabr.supabase.co';
-  static const supabaseAnnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
-      '.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzMTk0OTI4OCwiZXhwIjoxOTQ3NTI1Mjg4fQ'
-      '.OdutJHTpH0IlZnObthfpr5AWEO4PELfNgIjsfBLqugM';
-
   C._();
+
+  static const supabaseUrl = 'https://dnzzvoitixwdwtyttyhu.supabase.co';
+  static const supabaseAnnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+      '.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzMzY2MDM2MSwiZXhwIjoxOTQ5MjM2MzYxfQ'
+      '.mKzN0g4i_0u9NipghSBl9X9WISybO9X4czmhlG3r5LA';
+
+  static const agoraAppId = 'd09bc29a0c7f43c7940cf53374b674ab';
 }

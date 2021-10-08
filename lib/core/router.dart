@@ -1,7 +1,7 @@
 // Named routes
-import 'package:cosmonaut/pages/login_page.dart';
+import 'package:cosmonaut/pages/auth/login_page.dart';
 import 'package:cosmonaut/pages/main_page.dart';
-import 'package:cosmonaut/pages/register_page.dart';
+import 'package:cosmonaut/pages/auth/register_page.dart';
 import 'package:cosmonaut/pages/welcome.dart';
 import 'package:flutter/material.dart';
 

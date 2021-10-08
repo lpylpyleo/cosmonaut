@@ -1,23 +1,24 @@
 import 'package:cosmonaut/core/router.dart';
+import 'package:cosmonaut/core/singletons.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/logger.dart';
-import 'package:cosmonaut/widgets/atext.dart';
-import 'package:cosmonaut/widgets/dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cosmonaut/widgets/a_text.dart';
+import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final btnController = RoundedLoadingButtonController();
   String email = '';
   String password = '';
@@ -25,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -34,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AText(
-                  S.current.register,
+                  S.current.login,
                   fontSize: 24,
                 ),
                 const SizedBox(height: 32),
@@ -59,13 +61,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 32),
                 RoundedLoadingButton(
                   controller: btnController,
-                  onPressed: _onSignUpPress,
+                  onPressed: _onLoginPress,
                   width: mediaQueryData.size.width - 32,
                   borderRadius: 16,
                   color: Style.gold,
                   child: Center(
                     child: AText(
-                      S.current.register,
+                      S.current.login,
                       color: Colors.black,
                       fontSize: 16,
                     ),
@@ -75,16 +77,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AText(
-                      S.current.already_have_account,
+                      S.current.need_register,
                       fontSize: 14,
                     ),
                     TextButton(
                       style: ButtonStyle(
                         foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
                       ),
-                      onPressed: () => Get.offAndToNamed(Routes.login),
+                      onPressed: () => Get.offAndToNamed(Routes.register),
                       child: AText(
-                        S.current.login,
+                        S.current.sign_up,
                         fontSize: 14,
                       ),
                     ),
@@ -170,35 +172,21 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _onSignUpPress() async {
+  void _onLoginPress() async {
     try {
-      final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final response = await Supabase.instance.client.auth.signIn(
         email: email,
         password: password,
       );
-      logger.fine(userCredential);
-      Get.offAndToNamed(Routes.main);
-    } on FirebaseAuthException catch (e) {
-      logger.severe(e);
-
-      if (e.code == 'weak-password') {
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) => const ADialog(title: 'The password provided is too weak.'),
-        );
-      } else if (e.code == 'email-already-in-use') {
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) => const ADialog(title: 'The account already exists for that email.'),
-        );
-      }
+      if (response.error != null) throw response.error?.message ?? S.current.unknown_error;
+      logger.fine(response);
+      // Get.offAndToNamed(Routes.main);
     } catch (e) {
-      logger.severe(e);
-
       await showDialog(
         context: context,
         builder: (BuildContext context) => ADialog(title: e.toString()),
       );
+      logger.severe(e);
     } finally {
       btnController.reset();
     }

@@ -1,24 +1,24 @@
 import 'package:cosmonaut/core/router.dart';
+import 'package:cosmonaut/core/singletons.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/logger.dart';
-import 'package:cosmonaut/utils/navigation.dart';
-import 'package:cosmonaut/widgets/atext.dart';
-import 'package:cosmonaut/widgets/dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cosmonaut/widgets/a_text.dart';
+import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final btnController = RoundedLoadingButtonController();
   String email = '';
   String password = '';
@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -36,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AText(
-                  S.current.login,
+                  S.current.register,
                   fontSize: 24,
                 ),
                 const SizedBox(height: 32),
@@ -61,13 +60,13 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 32),
                 RoundedLoadingButton(
                   controller: btnController,
-                  onPressed: _onLoginPress,
+                  onPressed: _onSignUpPress,
                   width: mediaQueryData.size.width - 32,
                   borderRadius: 16,
                   color: Style.gold,
                   child: Center(
                     child: AText(
-                      S.current.login,
+                      S.current.register,
                       color: Colors.black,
                       fontSize: 16,
                     ),
@@ -77,16 +76,16 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AText(
-                      S.current.need_register,
+                      S.current.already_have_account,
                       fontSize: 14,
                     ),
                     TextButton(
                       style: ButtonStyle(
                         foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
                       ),
-                      onPressed: () => Get.offAndToNamed(Routes.register),
+                      onPressed: () => Get.offAndToNamed(Routes.login),
                       child: AText(
-                        S.current.sign_up,
+                        S.current.login,
                         fontSize: 14,
                       ),
                     ),
@@ -172,29 +171,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onLoginPress() async {
+  void _onSignUpPress() async {
     try {
-      final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      logger.fine(userCredential);
-      Get.offAndToNamed(Routes.main);
-    } on FirebaseAuthException catch (e) {
-      logger.severe(e);
-      if (e.code == 'user-not-found') {
+      final response = await Supabase.instance.client.auth.signUp(email, password);
+      if (response.error != null) throw response.error?.message ?? S.current.unknown_error;
+      if (response.data?.user == null) {
         await showDialog(
           context: context,
-          builder: (BuildContext context) => const ADialog(title: 'No user found for that email.'),
-        );
-      } else if (e.code == 'wrong-password') {
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) => const ADialog(title: 'Wrong password provided for that user.'),
+          builder: (BuildContext context) => ADialog(title: S.current.confirm_email),
         );
       }
+      logger.fine(response);
     } catch (e) {
       logger.severe(e);
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => ADialog(title: e.toString()),
+      );
     } finally {
       btnController.reset();
     }
