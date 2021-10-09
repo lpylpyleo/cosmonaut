@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirm_email": MessageLookupByLibrary.simpleMessage(
             "An email has been sent to your email address. Please confirm."),
+        "create_post": MessageLookupByLibrary.simpleMessage("Create Post"),
         "forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),

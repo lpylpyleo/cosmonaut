@@ -5,6 +5,8 @@ class AText extends StatelessWidget {
   final double? fontSize;
   final Color? color;
   final TextAlign? textAlign;
+  final FontWeight? fontWeight;
+  final double? letterSpacing;
 
   const AText(
     this.text, {
@@ -12,6 +14,8 @@ class AText extends StatelessWidget {
     this.fontSize,
     this.color,
     this.textAlign,
+    this.fontWeight,
+    this.letterSpacing,
   }) : super(key: key);
 
   @override
@@ -21,9 +25,11 @@ class AText extends StatelessWidget {
       textAlign: textAlign,
       style: TextStyle(
         height: 1.0,
-        fontFamily: 'SourceHanSansSC',
+        // fontFamily: 'SourceHanSansSC',
         fontSize: fontSize,
+        fontWeight: fontWeight,
         color: color,
+        letterSpacing: letterSpacing,
       ),
     );
   }

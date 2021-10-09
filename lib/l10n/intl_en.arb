@@ -10,5 +10,6 @@
   "cancel": "Cancel",
   "confirm_email": "An email has been sent to your email address. Please confirm.",
   "reset": "Reset",
-  "unknown_error": "Unknown error."
+  "unknown_error": "Unknown error.",
+  "create_post": "Create Post"
 }

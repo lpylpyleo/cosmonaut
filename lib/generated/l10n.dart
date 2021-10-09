@@ -169,6 +169,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Create Post`
+  String get create_post {
+    return Intl.message(
+      'Create Post',
+      name: 'create_post',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

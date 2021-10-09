@@ -1,3 +1,4 @@
+import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/pages/tab/square.dart';
@@ -25,7 +26,10 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 2, vsync: this)
+      ..addListener(() {
+        currentIndex.value = tabController.index;
+      });
     tabs = [
       _TabConfig(
         0,
@@ -58,8 +62,13 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(LineIcons.spaceShuttle),
+        onPressed: () {
+          Get.toNamed(Routes.createPost);
+        },
+        child: const RotatedBox(
+          quarterTurns: 0,
+          child: Icon(LineIcons.telegramPlane),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -73,6 +82,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
                     () => IconButton(
                       onPressed: e.onTap,
                       icon: Icon(e.icon),
+                      iconSize: 36.0,
                       color: currentIndex.value == e.index ? Style.gold : null,
                     ),
                   ))
