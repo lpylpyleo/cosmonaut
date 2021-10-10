@@ -15,7 +15,7 @@ void main() async {
     exit(1);
   }
   print('login success');
-  final r = await client.rpc('get_latest_posts').execute();
+  final r = await client.rpc('all_users').execute();
   final apis = getApiConfigs(client);
   final responses = await Future.wait(
     apis.map(
