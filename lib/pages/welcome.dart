@@ -25,11 +25,11 @@ class _WelcomePageState extends State<WelcomePage> {
       Get.offAllNamed(Routes.login, predicate: (_) => false);
     });
 
-    if(Supabase.instance.client.auth.session() != null){
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        Get.offAllNamed(Routes.main, predicate: (_) => false);
-      });
-    }
+    // if(Supabase.instance.client.auth.session() != null){
+    //   WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //     Get.offAllNamed(Routes.main, predicate: (_) => false);
+    //   });
+    // }
   }
 
   @override

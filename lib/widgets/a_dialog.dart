@@ -18,6 +18,7 @@ class ADialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       backgroundColor: Colors.grey[500],
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 32, 8, 16),

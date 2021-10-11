@@ -1,10 +1,13 @@
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/singletons.dart';
 import 'package:cosmonaut/core/styles.dart';
+import 'package:cosmonaut/data/api/auth.dart';
 import 'package:cosmonaut/generated/l10n.dart';
+import 'package:cosmonaut/utils/error_handler.dart';
 import 'package:cosmonaut/utils/logger.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:cosmonaut/widgets/a_dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -172,24 +175,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onSignUpPress() async {
-    try {
-      final response = await Supabase.instance.client.auth.signUp(email, password);
-      if (response.error != null) throw response.error?.message ?? S.current.unknown_error;
-      if (response.data?.user == null) {
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) => ADialog(title: S.current.confirm_email),
-        );
-      }
-      logger.fine(response);
-    } catch (e) {
-      logger.severe(e);
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => ADialog(title: e.toString()),
-      );
-    } finally {
-      btnController.reset();
-    }
+    await Api.signUp(email, password, password).then((v) {
+
+    }).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
   }
 }
