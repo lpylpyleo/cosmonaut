@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 
 import 'logger.dart';
 
-FutureOr<Null> defaultApiErrorHandler(dynamic error) async {
+FutureOr<Null> defaultApiErrorHandler(dynamic error) {
   late String msg;
-  if (error is DioError) {
+  if (error is DioError && error.type == DioErrorType.response) {
     final data = error.response?.data;
     logger.severe(error.requestOptions.data);
     logger.severe(data);

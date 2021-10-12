@@ -9,17 +9,12 @@ class HttpClient {
   HttpClient._() {
     logger.fine('init http');
     final _options = BaseOptions(
-      baseUrl: 'http://192.168.1.15:8299',
+      baseUrl: 'http://192.168.1.15:8199',
       connectTimeout: 5000,
       receiveTimeout: 5000,
     );
     _dio = Dio(_options);
     _dio.interceptors.add(CookieManager(CookieJar()));
-    // _dio.interceptors.add(InterceptorsWrapper(
-    //   onError: (error, handler) {
-    //     handler.re(response);
-    //   },
-    // ));
   }
 
   static final HttpClient _instance = HttpClient._();

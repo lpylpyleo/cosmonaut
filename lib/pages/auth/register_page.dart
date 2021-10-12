@@ -1,18 +1,13 @@
 import 'package:cosmonaut/core/router.dart';
-import 'package:cosmonaut/core/singletons.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/api/auth.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/error_handler.dart';
-import 'package:cosmonaut/utils/logger.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
-import 'package:cosmonaut/widgets/a_dialog.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -175,8 +170,9 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onSignUpPress() async {
-    await Api.signUp(email, password, password).then((v) {
-
-    }).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
+    await Api.signUp(
+      email.trim(),
+      password.trim(),
+    ).then((v) {}).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
   }
 }

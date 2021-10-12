@@ -1,3 +1,4 @@
+import 'package:cosmonaut/core/constants.dart';
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     final botToastBuilder = BotToastInit();
 
     return GetMaterialApp(
-      title: "Cosmonaut",
+      title: C.appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
