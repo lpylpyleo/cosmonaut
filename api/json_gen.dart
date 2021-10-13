@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cosmonaut/core/constants.dart';
-import 'package:supabase/supabase.dart';
-import 'config.dart' as cfg;
+import 'package:cosmonaut/data/api/auth.dart';
+import 'package:cosmonaut/data/http/http_client.dart';
 import 'package:path/path.dart' as path;
+
+import 'config.dart' as cfg;
 
 // ignore:avoid_print
 void main() async {
-  final client = SupabaseClient(C.supabaseUrl, C.supabaseAnnonKey);
-  final auth = await client.auth.signIn(email: cfg.email, password: cfg.password);
+  final client = HttpClient.instance;
+  final auth = await Api.signIn(cfg.email, cfg.password);
   if (auth.error != null) {
     print(auth.error!.message);
     exit(1);
   }
   print('login success');
-  final r = await client.rpc('all_users').execute();
   final apis = getApiConfigs(client);
   final responses = await Future.wait(
     apis.map(
@@ -43,11 +43,11 @@ void main() async {
   exit(0);
 }
 
-List<ApiConfig> getApiConfigs(SupabaseClient client) => [
-      ApiConfig(
-        filename: 'posts',
-        request: client.rpc('get_latest_posts').execute(),
-      ),
+List<ApiConfig> getApiConfigs(HttpClient client) => [
+      // ApiConfig(
+      //   filename: 'posts',
+      //   request: client.rpc('get_latest_posts').execute(),
+      // ),
     ];
 
 class ApiConfig {

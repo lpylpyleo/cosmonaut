@@ -4,7 +4,6 @@ import 'package:cosmonaut/widgets/a_app_bar.dart';
 import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({Key? key}) : super(key: key);

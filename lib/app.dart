@@ -4,7 +4,6 @@ import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get.dart';
 import 'package:bot_toast/bot_toast.dart';
 
 class MyApp extends StatelessWidget {
@@ -14,9 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
 
-    return GetMaterialApp(
+    return MaterialApp(
       title: C.appName,
       debugShowCheckedModeBanner: false,
+      navigatorKey: C.navigationKey,
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Style.gold,

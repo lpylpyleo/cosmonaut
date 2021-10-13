@@ -3,10 +3,10 @@ import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/api/auth.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/error_handler.dart';
+import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: ButtonStyle(
                         foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
                       ),
-                      onPressed: () => Get.offAndToNamed(Routes.login),
+                      onPressed: () => goToNamed(Routes.login, replace: true),
                       child: AText(
                         S.current.login,
                         fontSize: 14,
@@ -169,9 +169,9 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _onSignUpPress() async {
+  Future<void> _onSignUpPress() async {
     await Api.signUp(
-      email.trim(),
+      email.trim().toLowerCase(),
       password.trim(),
     ).then((v) {}).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
   }

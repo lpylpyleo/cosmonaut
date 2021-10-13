@@ -2,12 +2,12 @@ import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/pages/tab/square.dart';
+import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_app_bar.dart';
 import 'package:cosmonaut/widgets/starry_sky.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 class MainPage extends StatefulHookWidget {
@@ -18,7 +18,7 @@ class MainPage extends StatefulHookWidget {
 }
 
 class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin {
-  final currentIndex = 0.obs;
+  final currentIndex = ValueNotifier(0);
   late final TabController tabController;
 
   late final List<_TabConfig> tabs;
@@ -62,9 +62,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(Routes.createPost);
-        },
+        onPressed: () => goToNamed(Routes.createPost),
         child: const RotatedBox(
           quarterTurns: 0,
           child: Icon(LineIcons.telegramPlane),
@@ -78,13 +76,11 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: tabs
-              .map((e) => Obx(
-                    () => IconButton(
-                      onPressed: e.onTap,
-                      icon: Icon(e.icon),
-                      iconSize: 36.0,
-                      color: currentIndex.value == e.index ? Style.gold : null,
-                    ),
+              .map((e) => IconButton(
+                    onPressed: e.onTap,
+                    icon: Icon(e.icon),
+                    iconSize: 36.0,
+                    color: currentIndex.value == e.index ? Style.gold : null,
                   ))
               .toList(),
         ),

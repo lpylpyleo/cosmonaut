@@ -1,7 +1,7 @@
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
+import 'package:cosmonaut/utils/navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'a_text.dart';
 
@@ -34,7 +34,7 @@ class ADialog extends StatelessWidget {
                 foregroundColor: MaterialStateColor.resolveWith((states) => Colors.black),
                 backgroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
               ),
-              onPressed: () => Get.back(),
+              onPressed: () => goBack(),
               child: AText(S.current.confirm),
             ),
           ],

@@ -1,14 +1,11 @@
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
-import 'package:cosmonaut/utils/logger.dart';
+import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
-import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -75,7 +72,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       style: ButtonStyle(
                         foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
                       ),
-                      onPressed: () => Get.offAndToNamed(Routes.login),
+                      onPressed: () => goToNamed(Routes.login, replace: true),
                       child: AText(
                         S.current.login,
                         fontSize: 14,
@@ -164,22 +161,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   void _onResetPasswordPress() async {
-    try {
-      final response = await Supabase.instance.client.auth.api.refreshAccessToken(email);
-      if (response.error != null) throw response.error?.message ?? S.current.unknown_error;
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => ADialog(title: S.current.confirm_email),
-      );
-      logger.fine(response);
-    } catch (e) {
-      logger.severe(e);
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => ADialog(title: e.toString()),
-      );
-    } finally {
-      btnController.reset();
-    }
+
   }
 }

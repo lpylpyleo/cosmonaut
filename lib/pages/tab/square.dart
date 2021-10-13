@@ -1,5 +1,4 @@
 import 'package:cosmonaut/data/model/post.dart';
-import 'package:cosmonaut/data/service/rpc.dart';
 import 'package:cosmonaut/utils/time.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:extended_image/extended_image.dart';
@@ -20,7 +19,6 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
   @override
   void initState() {
     super.initState();
-    fetchPostRequest = RpcService.getAllPosts().then((value) => posts.value = value);
   }
 
   @override

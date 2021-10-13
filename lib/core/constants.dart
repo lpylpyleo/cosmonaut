@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+
 class C {
   C._();
 
@@ -11,4 +15,9 @@ class C {
   static const agoraAppId = 'd09bc29a0c7f43c7940cf53374b674ab';
 
   static const signSuffix = '_sign_v1';
+
+  static final navigationKey = GlobalKey<NavigatorState>();
+  static get context => navigationKey.currentContext!;
+
+  static late Directory appDocDir;
 }

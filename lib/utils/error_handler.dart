@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:cosmonaut/core/constants.dart';
 
 import 'logger.dart';
 
@@ -16,5 +17,5 @@ FutureOr<Null> defaultApiErrorHandler(dynamic error) {
   } else {
     msg = error.toString();
   }
-  Get.dialog(ADialog(title: msg));
+  showDialog(context: C.context, builder: (_) => ADialog(title: msg));
 }

@@ -1,15 +1,14 @@
 import 'package:cosmonaut/core/router.dart';
-import 'package:cosmonaut/core/singletons.dart';
 import 'package:cosmonaut/core/styles.dart';
+import 'package:cosmonaut/data/api/auth.dart';
 import 'package:cosmonaut/generated/l10n.dart';
+import 'package:cosmonaut/utils/error_handler.dart';
 import 'package:cosmonaut/utils/logger.dart';
+import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
-import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -84,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: ButtonStyle(
                         foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
                       ),
-                      onPressed: () => Get.offAndToNamed(Routes.register),
+                      onPressed: () => () => goToNamed(Routes.register, replace: true),
                       child: AText(
                         S.current.sign_up,
                         fontSize: 14,
@@ -172,23 +171,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onLoginPress() async {
-    try {
-      final response = await Supabase.instance.client.auth.signIn(
-        email: email,
-        password: password,
-      );
-      if (response.error != null) throw response.error?.message ?? S.current.unknown_error;
-      logger.fine(response);
-      // Get.offAndToNamed(Routes.main);
-    } catch (e) {
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => ADialog(title: e.toString()),
-      );
-      logger.severe(e);
-    } finally {
-      btnController.reset();
-    }
+  Future<void> _onLoginPress() async {
+    await Api.signIn(
+      email.trim().toLowerCase(),
+      password.trim(),
+    ).then((v) {
+      logger.fine(v);
+    }).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
   }
 }
