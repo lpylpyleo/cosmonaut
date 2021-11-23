@@ -1,11 +1,11 @@
-import 'dart:convert';
+part of '../model.dart';
 
-List<Post> postFromJson(String str) => List<Post>.from(json.decode(str).map((x) => Post.fromJson(x)));
+List<PostModel> postFromJson(String str) => List<PostModel>.from(json.decode(str).map((x) => PostModel.fromJson(x)));
 
-String postToJson(List<Post> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String postToJson(List<PostModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Post {
-  Post({
+class PostModel {
+  PostModel({
     this.id,
     this.title,
     this.createdAt,
@@ -13,6 +13,7 @@ class Post {
     this.poster,
     this.displayName,
     this.avatar,
+    this.isPublic,
   });
 
   final int? id;
@@ -22,8 +23,9 @@ class Post {
   final String? poster;
   final String? displayName;
   final String? avatar;
+  final bool? isPublic;
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
+  factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
     id: json["id"],
     title: json["title"],
     createdAt: json["created_at"],
@@ -31,6 +33,7 @@ class Post {
     poster: json["poster"],
     displayName: json["display_name"],
     avatar: json["avatar"],
+    isPublic: json["isPublic"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -41,5 +44,6 @@ class Post {
     "poster": poster,
     "display_name": displayName,
     "avatar": avatar,
+    "isPublic": isPublic,
   };
 }

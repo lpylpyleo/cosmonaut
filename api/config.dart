@@ -1,4 +1,4 @@
-const email = 'lpylpyleo@gmail.com';
+const email = 'qwe@qwe.com';
 const password = 'qwe123';
 
-const jsonDir = 'assets/json';
+const jsonDir = 'excluded/json';

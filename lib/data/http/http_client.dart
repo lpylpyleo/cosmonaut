@@ -8,9 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 
-class _ErrorCode {
-  static const needLogin = 10403;
-}
+typedef Parser<T> = T Function(dynamic);
 
 class HttpClient {
   static late Dio _dio;
@@ -37,12 +35,12 @@ class HttpClient {
           if (msg == "") {
             msg = "[EMPTY RESPONSE]";
           }
-          msg = "${response.requestOptions.uri}: $msg";
+          msg = "${response.requestOptions.uri.path}: $msg";
           logger.fine(msg);
           handler.resolve(response);
         },
         onError: (error, handler) {
-          logger.severe(error);
+          logger.severe('${error.requestOptions.uri} ${error.response}');
           if (error is DioError && error.type == DioErrorType.response) {
             if (error.response?.statusCode == HttpStatus.forbidden) {
               Navigator.of(C.context).pushNamedAndRemoveUntil(Routes.login, (_) => false);
@@ -58,32 +56,35 @@ class HttpClient {
 
   static HttpClient get instance => _instance;
 
-  Future<Response<T>> get<T>(
-    String path, {
+  Future<T> get<T>(
+    String path,
+    Parser<T> parser, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
-  }) {
-    return _dio.get(
+  }) async {
+    final res = await _dio.get(
       path,
       queryParameters: queryParameters,
       options: options,
       cancelToken: cancelToken,
       onReceiveProgress: onReceiveProgress,
     );
+    return parser(res.data);
   }
 
-  Future<Response<T>> post<T>(
-    String path, {
+  Future<T> post<T>(
+    String path,
+    Parser<T> parser, {
     data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
-  }) {
-    return _dio.post(
+  }) async {
+    final res = await _dio.post(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -92,5 +93,6 @@ class HttpClient {
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
+    return parser(res.data);
   }
 }

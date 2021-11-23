@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cosmonaut/data/api/auth.dart';
+import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/data/http/http_client.dart';
 import 'package:path/path.dart' as path;
 
@@ -10,7 +10,7 @@ import 'config.dart' as cfg;
 // ignore:avoid_print
 void main() async {
   final client = HttpClient.instance;
-  final auth = await Api.signIn(cfg.email, cfg.password);
+  final auth = await Api.auth.signIn(cfg.email, cfg.password);
   if (auth.error != null) {
     print(auth.error!.message);
     exit(1);
@@ -29,7 +29,7 @@ void main() async {
     eagerError: true,
   );
 
-  if(File(cfg.jsonDir).existsSync()) {
+  if (File(cfg.jsonDir).existsSync()) {
     print('jsonDir does not exist. '
         'Please Check if the directory is created and you are run this script under project root directory.');
     exit(2);
@@ -44,10 +44,10 @@ void main() async {
 }
 
 List<ApiConfig> getApiConfigs(HttpClient client) => [
-      // ApiConfig(
-      //   filename: 'posts',
-      //   request: client.rpc('get_latest_posts').execute(),
-      // ),
+      ApiConfig(
+        filename: 'posts',
+        request: Api.post.get(),
+      ),
     ];
 
 class ApiConfig {

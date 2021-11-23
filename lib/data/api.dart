@@ -1,5 +1,6 @@
 import 'package:cosmonaut/data/http/http_client.dart';
-import 'package:cosmonaut/utils/logger.dart';
+import 'package:cosmonaut/utils/http.dart';
+import 'package:cosmonaut/data/model.dart' as model;
 
 part 'api/auth.dart';
 

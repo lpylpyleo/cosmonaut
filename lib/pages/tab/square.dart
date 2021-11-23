@@ -1,10 +1,10 @@
-import 'package:cosmonaut/data/api.dart' show Api;
-import 'package:cosmonaut/data/model/post.dart';
+import 'package:cosmonaut/data/provider.dart';
 import 'package:cosmonaut/utils/time.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:cosmonaut/extension.dart';
 
 class SquareTab extends StatefulWidget {
   const SquareTab({Key? key}) : super(key: key);
@@ -14,21 +14,19 @@ class SquareTab extends StatefulWidget {
 }
 
 class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixin {
-  final posts = ValueNotifier(<Post>[]);
-
   @override
   void initState() {
     super.initState();
-    Api.post.get();
+    context.read<Posts>().refreshPosts();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    return ValueListenableBuilder(
-      valueListenable: posts,
-      builder: (BuildContext context, List<Post> posts, Widget? child) {
+    return Consumer<Posts>(
+      builder: (context, provider, child) {
+        final posts = provider.posts;
         return ListView.builder(
           itemCount: posts.length,
           itemBuilder: (BuildContext context, int index) {
@@ -47,7 +45,7 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
                     Row(
                       children: [
                         ExtendedImage.network(
-                          post.avatar!,
+                          post.avatar ?? '',
                           width: 64,
                           shape: BoxShape.circle,
                         ),
@@ -56,12 +54,14 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AText(
-                              post.displayName!,
+                              post.displayName ?? '',
                               fontSize: 18,
                             ),
                             const SizedBox(height: 8.0),
                             AText(
-                              dateTimeFormat.format(DateTime.parse(post.createdAt!)),
+                              dateTimeFormat.format(DateTime.parse(
+                                post.createdAt ?? DateTime.now().toIso8601String(),
+                              )),
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
                               letterSpacing: 0.5,
@@ -71,7 +71,7 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
                       ],
                     ),
                     const SizedBox(height: 16.0),
-                    AText(post.content!, fontSize: 16),
+                    AText(post.content ?? '', fontSize: 16),
                     const SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
