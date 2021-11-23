@@ -1,6 +1,8 @@
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
+import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/generated/l10n.dart';
+import 'package:cosmonaut/pages/tab/setting.dart';
 import 'package:cosmonaut/pages/tab/square.dart';
 import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_app_bar.dart';
@@ -48,6 +50,8 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         },
       ),
     ];
+
+    Api.profile.get();
   }
 
   @override
@@ -58,7 +62,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         controller: tabController,
         children: const [
           SquareTab(),
-          StarrySky(),
+          SettingTab(),
         ],
       ),
       floatingActionButton: FloatingActionButton(

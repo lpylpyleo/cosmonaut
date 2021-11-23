@@ -1,6 +1,6 @@
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
-import 'package:cosmonaut/data/api/auth.dart';
+import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/error_handler.dart';
 import 'package:cosmonaut/utils/logger.dart';
@@ -81,9 +81,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextButton(
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
+                        foregroundColor: MaterialStateColor.resolveWith((_) => Style.gold),
                       ),
-                      onPressed: () => () => goToNamed(Routes.register, replace: true),
+                      onPressed: () => goToNamed(Routes.register, replace: true),
                       child: AText(
                         S.current.sign_up,
                         fontSize: 14,
@@ -172,11 +172,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _onLoginPress() async {
-    await Api.signIn(
+    await Api.auth.signIn(
       email.trim().toLowerCase(),
       password.trim(),
     ).then((v) {
       logger.fine(v);
+      Navigator.of(context).pushNamed(Routes.main);
     }).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
   }
 }

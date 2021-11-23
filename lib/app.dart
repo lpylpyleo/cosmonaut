@@ -37,18 +37,7 @@ class MyApp extends StatelessWidget {
       ],
       navigatorObservers: [BotToastNavigatorObserver()],
       builder: (context, child) {
-        return botToastBuilder(
-          context,
-          GestureDetector(
-            onTap: () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-                FocusManager.instance.primaryFocus!.unfocus();
-              }
-            },
-            child: child,
-          ),
-        );
+        return botToastBuilder(context, child);
       },
       routes: routes,
       initialRoute: Routes.welcome,

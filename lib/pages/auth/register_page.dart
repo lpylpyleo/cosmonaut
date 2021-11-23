@@ -1,6 +1,6 @@
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
-import 'package:cosmonaut/data/api/auth.dart';
+import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/error_handler.dart';
 import 'package:cosmonaut/utils/navigation.dart';
@@ -170,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _onSignUpPress() async {
-    await Api.signUp(
+    await Api.auth.signUp(
       email.trim().toLowerCase(),
       password.trim(),
     ).then((v) {}).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());

@@ -1,4 +1,5 @@
 import 'package:cosmonaut/core/styles.dart';
+import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/widgets/a_app_bar.dart';
 import 'package:cosmonaut/widgets/a_dialog.dart';
@@ -35,7 +36,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 builder: (BuildContext context) => ADialog(title: 'Empty'),
               );
             }
-            // Supabase.instance.client.rpc('fn')
+            Api.post.create(content.value);
           },
           child: const Icon(
             LineIcons.telegramPlane,

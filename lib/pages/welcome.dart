@@ -19,7 +19,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
-    timer = Timer(const Duration(seconds: 3), () {
+    timer = Timer(const Duration(seconds: 1), () {
       Navigator.of(C.context).pushNamedAndRemoveUntil(Routes.main, (_) => false);
     });
   }

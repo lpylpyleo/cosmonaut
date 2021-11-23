@@ -1,3 +1,4 @@
+import 'package:cosmonaut/data/api.dart' show Api;
 import 'package:cosmonaut/data/model/post.dart';
 import 'package:cosmonaut/utils/time.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
@@ -14,11 +15,11 @@ class SquareTab extends StatefulWidget {
 
 class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixin {
   final posts = ValueNotifier(<Post>[]);
-  Future? fetchPostRequest;
 
   @override
   void initState() {
     super.initState();
+    Api.post.get();
   }
 
   @override
