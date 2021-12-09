@@ -1,7 +1,7 @@
 part of '../provider.dart';
 
 
-class Posts with ChangeNotifier {
+class PostNotifier with ChangeNotifier {
   final List<PostModel> _posts = [];
 
   List<PostModel> get posts => _posts;

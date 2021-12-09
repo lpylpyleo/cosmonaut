@@ -24,8 +24,7 @@ class AText extends StatelessWidget {
       text,
       textAlign: textAlign,
       style: TextStyle(
-        height: 1.0,
-        // fontFamily: 'SourceHanSansSC',
+        height: 1.2,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,

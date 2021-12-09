@@ -17,14 +17,14 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
   @override
   void initState() {
     super.initState();
-    context.read<Posts>().refreshPosts();
+    context.read<PostNotifier>().refreshPosts();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Consumer<Posts>(
+    return Consumer<PostNotifier>(
       builder: (context, provider, child) {
         final posts = provider.posts;
         return ListView.builder(
@@ -54,7 +54,7 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AText(
-                              post.displayName ?? '',
+                              post.nickname ?? '',
                               fontSize: 18,
                             ),
                             const SizedBox(height: 8.0),
@@ -71,7 +71,7 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
                       ],
                     ),
                     const SizedBox(height: 16.0),
-                    AText(post.content ?? '', fontSize: 16),
+                    AText(post.content ?? '', fontSize: 20),
                     const SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

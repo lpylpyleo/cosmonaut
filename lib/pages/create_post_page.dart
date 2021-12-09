@@ -34,7 +34,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             if (content.value.isEmpty) {
               return showDialog(
                 context: context,
-                builder: (BuildContext context) => ADialog(title: 'Empty'),
+                builder: (BuildContext context) => const ADialog(title: 'Empty'),
               );
             }
             Api.post.create(content.value).then((_) => goBack());

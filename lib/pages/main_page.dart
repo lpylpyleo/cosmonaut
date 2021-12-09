@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
       ),
     ];
 
-    Api.profile.get();
+    Api.profile.get().then((value) => context.read<ProfileNotifier>().set(value));
   }
 
   @override
@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => goToNamed(Routes.createPost).then((_) => context.read<Posts>().refreshPosts()),
+        onPressed: () => goToNamed(Routes.createPost).then((_) => context.read<PostNotifier>().refreshPosts()),
         child: const RotatedBox(
           quarterTurns: 0,
           child: Icon(LineIcons.telegramPlane),

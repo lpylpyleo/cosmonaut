@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
@@ -6,6 +7,7 @@ import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/utils/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef Parser<T> = T Function(dynamic);
@@ -31,11 +33,12 @@ class HttpClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onResponse: (response, handler) {
+          if(!kDebugMode) return handler.resolve(response);
           var msg = response.data;
-          if (msg == "") {
-            msg = "[EMPTY RESPONSE]";
+          if (msg == '') {
+            msg = '[EMPTY RESPONSE]';
           }
-          msg = "${response.requestOptions.uri.path}: $msg";
+          msg = '${response.requestOptions.uri.path}: ${jsonEncode(msg)}';
           logger.fine(msg);
           handler.resolve(response);
         },

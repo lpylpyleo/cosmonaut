@@ -15,9 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
 
+
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Posts()),
+        ChangeNotifierProvider(create: (_) => ProfileNotifier()),
+        ChangeNotifierProvider(create: (_) => PostNotifier()),
       ],
       child: MaterialApp(
         title: C.appName,

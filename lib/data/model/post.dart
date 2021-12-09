@@ -1,49 +1,62 @@
 part of '../model.dart';
 
-List<PostModel> postFromJson(String str) => List<PostModel>.from(json.decode(str).map((x) => PostModel.fromJson(x)));
+List<PostModel> postModelFromJson(String str) =>
+    List<PostModel>.from(json.decode(str).map((x) => PostModel.fromJson(x)));
 
-String postToJson(List<PostModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String postModelToJson(List<PostModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class PostModel {
   PostModel({
     this.id,
+    this.creator,
     this.title,
-    this.createdAt,
     this.content,
-    this.poster,
-    this.displayName,
-    this.avatar,
     this.isPublic,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.uid,
+    this.avatar,
+    this.nickname,
   });
 
-  final int? id;
-  final String? title;
-  final String? createdAt;
-  final String? content;
-  final String? poster;
-  final String? displayName;
-  final String? avatar;
-  final bool? isPublic;
+  int? id;
+  String? creator;
+  String? title;
+  String? content;
+  bool? isPublic;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  String? uid;
+  String? avatar;
+  String? nickname;
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
-    id: json["id"],
-    title: json["title"],
-    createdAt: json["created_at"],
-    content: json["content"],
-    poster: json["poster"],
-    displayName: json["display_name"],
-    avatar: json["avatar"],
-    isPublic: json["isPublic"],
-  );
+        id: json["id"],
+        creator: json["creator"],
+        title: json["title"],
+        content: json["content"],
+        isPublic: json["isPublic"],
+        createdAt: json["createdAt"],
+        updatedAt: json["updatedAt"],
+        deletedAt: json["deletedAt"],
+        uid: json["uid"],
+        avatar: json["avatar"],
+        nickname: json["nickname"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "created_at": createdAt,
-    "content": content,
-    "poster": poster,
-    "display_name": displayName,
-    "avatar": avatar,
-    "isPublic": isPublic,
-  };
+        "id": id,
+        "creator": creator,
+        "title": title,
+        "content": content,
+        "isPublic": isPublic,
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
+        "deletedAt": deletedAt,
+        "uid": uid,
+        "avatar": avatar,
+        "nickname": nickname,
+      };
 }
