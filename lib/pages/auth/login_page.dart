@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: _onLoginPress,
                   width: mediaQueryData.size.width - 32,
                   borderRadius: 16,
-                  color: Style.gold,
+                  color: AppPalette.gold,
                   child: Center(
                     child: AText(
                       S.current.login,
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextButton(
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateColor.resolveWith((_) => Style.gold),
+                        foregroundColor: MaterialStateColor.resolveWith((_) => AppPalette.gold),
                       ),
                       onPressed: () => goToNamed(Routes.register, replace: true),
                       child: AText(
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(8),
               child: Icon(
                 iconData,
-                color: Style.gold,
+                color: AppPalette.gold,
                 size: 20,
               ),
             ),
@@ -172,12 +172,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _onLoginPress() async {
-    await Api.auth.signIn(
-      email.trim().toLowerCase(),
-      password.trim(),
-    ).then((v) {
+    try {
+      final v = await Api.auth.signIn(email.trim().toLowerCase(), password.trim());
       logger.fine(v);
       Navigator.of(context).pushNamed(Routes.main);
-    }).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
+    } catch (e) {
+      defaultApiErrorHandler(e);
+    } finally {
+      btnController.reset();
+    }
   }
 }

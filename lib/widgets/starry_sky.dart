@@ -60,7 +60,7 @@ class StarrySkyPainter extends CustomPainter {
         super(repaint: timelapse);
 
   final starPaint = Paint()
-    ..color = Style.gold
+    ..color = AppPalette.gold
     ..style = PaintingStyle.fill;
 
   final skyPaint = Paint()

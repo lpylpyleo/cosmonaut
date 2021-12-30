@@ -15,8 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
 
-
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProfileNotifier()),
@@ -28,10 +26,16 @@ class MyApp extends StatelessWidget {
         navigatorKey: C.navigationKey,
         theme: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Style.gold,
+          primaryColor: AppPalette.gold,
           platform: TargetPlatform.iOS,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.black,
+          ),
+          iconTheme: const IconThemeData(
+            color: AppPalette.gold,
+          ),
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Style.gold,
+            backgroundColor: AppPalette.gold,
           ),
         ),
         localizationsDelegates: const [

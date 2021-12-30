@@ -11,7 +11,7 @@ class Post {
   Future<List<PostModel>> get() async {
     return HttpClient.instance.get(
       '/api/v1/post',
-      (v) => (v as List?)?.map((e) => PostModel.fromJson(e)).toList() ?? [],
+      (v) => postModelFromJson(v),
     );
   }
 }

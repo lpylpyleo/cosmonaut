@@ -18,4 +18,5 @@ FutureOr<Null> defaultApiErrorHandler(dynamic error) {
     msg = error.toString();
   }
   showDialog(context: C.context, builder: (_) => ADialog(title: msg));
+  throw error;
 }

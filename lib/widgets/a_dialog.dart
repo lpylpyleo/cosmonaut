@@ -32,7 +32,7 @@ class ADialog extends StatelessWidget {
             ElevatedButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateColor.resolveWith((states) => Colors.black),
-                backgroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
+                backgroundColor: MaterialStateColor.resolveWith((states) => AppPalette.gold),
               ),
               onPressed: () => goBack(),
               child: AText(S.current.confirm),

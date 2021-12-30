@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/api.dart';
@@ -59,6 +61,8 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AAppBar(title: S.current.appName),
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       body: TabBarView(
         controller: tabController,
         children: const [
@@ -74,27 +78,39 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        elevation: 4,
-        shape: const CircularNotchedRectangle(),
-        color: Colors.grey[800],
-        child: ValueListenableBuilder(
-          valueListenable: currentIndex,
-          builder: (BuildContext context, int value, Widget? child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: tabs
-                  .map(
-                    (e) => IconButton(
-                      onPressed: e.onTap,
-                      icon: Icon(e.icon),
-                      iconSize: 36.0,
-                      color: value == e.index ? Style.gold : null,
-                    ),
-                  )
-                  .toList(),
-            );
-          },
+      bottomNavigationBar: ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: BottomAppBar(
+            elevation: 0,
+            shape: const CircularNotchedRectangle(),
+            color: Colors.grey[800]!.withOpacity(0.5),
+            child: ValueListenableBuilder(
+              valueListenable: currentIndex,
+              builder: (BuildContext context, int value, Widget? child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: tabs
+                      .map(
+                        (e) => GestureDetector(
+                          onTap: e.onTap,
+                          child: Container(
+                            width: 54,
+                            height: 54,
+                            alignment: Alignment.center,
+                            child: Icon(
+                              e.icon,
+                              size: 36,
+                              color: value == e.index ? AppPalette.gold : Colors.grey,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

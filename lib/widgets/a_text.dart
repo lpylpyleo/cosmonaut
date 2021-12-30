@@ -6,6 +6,7 @@ class AText extends StatelessWidget {
   final Color? color;
   final TextAlign? textAlign;
   final FontWeight? fontWeight;
+  final double? height;
   final double? letterSpacing;
 
   const AText(
@@ -15,6 +16,7 @@ class AText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.fontWeight,
+    this.height,
     this.letterSpacing,
   }) : super(key: key);
 
@@ -24,7 +26,7 @@ class AText extends StatelessWidget {
       text,
       textAlign: textAlign,
       style: TextStyle(
-        height: 1.2,
+        height: height ?? 1.2,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,

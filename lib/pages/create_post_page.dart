@@ -28,8 +28,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
     return Scaffold(
       appBar: AAppBar(
         title: S.current.create_post,
-        action: MaterialButton(
-          color: Style.gold,
+        leading: const BackButton(),
+        trailing: MaterialButton(
+          color: AppPalette.gold,
           onPressed: () async {
             if (content.value.isEmpty) {
               return showDialog(
@@ -55,6 +56,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 horizontal: 16,
               ),
               child: TextField(
+                autofocus: true,
                 onChanged: (v) => content.value = v,
                 minLines: 5,
                 maxLines: null,
@@ -62,9 +64,13 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 style: const TextStyle(
                   letterSpacing: 1,
                 ),
-                cursorColor: Style.gold,
+                cursorColor: AppPalette.gold,
                 decoration: const InputDecoration(
-                  border: InputBorder.none,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppPalette.gold,
+                    ),
+                  ),
                 ),
               ),
             ),

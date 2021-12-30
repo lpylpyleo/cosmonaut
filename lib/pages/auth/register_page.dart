@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: _onSignUpPress,
                   width: mediaQueryData.size.width - 32,
                   borderRadius: 16,
-                  color: Style.gold,
+                  color: AppPalette.gold,
                   child: Center(
                     child: AText(
                       S.current.register,
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     TextButton(
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
+                        foregroundColor: MaterialStateColor.resolveWith((states) => AppPalette.gold),
                       ),
                       onPressed: () => goToNamed(Routes.login, replace: true),
                       child: AText(
@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
               borderRadius: BorderRadius.circular(8),
               child: Icon(
                 iconData,
-                color: Style.gold,
+                color: AppPalette.gold,
                 size: 20,
               ),
             ),

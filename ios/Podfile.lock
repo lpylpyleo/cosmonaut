@@ -1,41 +1,28 @@
 PODS:
-  - agora_rtc_engine (4.0.7):
-    - AgoraRtcEngine_iOS (= 3.5.0.3)
-    - Flutter
-  - AgoraRtcEngine_iOS (3.5.0.3)
   - Flutter (1.0.0)
   - image_picker (0.0.1):
     - Flutter
-  - path_provider (0.0.1):
+  - path_provider_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - Flutter (from `Flutter`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - path_provider (from `.symlinks/plugins/path_provider/ios`)
-
-SPEC REPOS:
-  trunk:
-    - AgoraRtcEngine_iOS
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
 
 EXTERNAL SOURCES:
-  agora_rtc_engine:
-    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   Flutter:
     :path: Flutter
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
-  path_provider:
-    :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
 
 SPEC CHECKSUMS:
-  agora_rtc_engine: 0820b82b3a71a8fcaf8b27c000622e671349f0ba
-  AgoraRtcEngine_iOS: ff8e085161ea98c917173783a899882f884dd9ef
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
-  path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
+  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: 5ed62cc23b7d60e3385b51d2c03eb8668e5df053
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

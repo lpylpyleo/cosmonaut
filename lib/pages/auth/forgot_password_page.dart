@@ -52,7 +52,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   onPressed: _onResetPasswordPress,
                   width: mediaQueryData.size.width - 32,
                   borderRadius: 16,
-                  color: Style.gold,
+                  color: AppPalette.gold,
                   child: Center(
                     child: AText(
                       S.current.reset,
@@ -70,7 +70,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                     TextButton(
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateColor.resolveWith((states) => Style.gold),
+                        foregroundColor: MaterialStateColor.resolveWith((states) => AppPalette.gold),
                       ),
                       onPressed: () => goToNamed(Routes.login, replace: true),
                       child: AText(
@@ -114,7 +114,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               borderRadius: BorderRadius.circular(8),
               child: Icon(
                 iconData,
-                color: Style.gold,
+                color: AppPalette.gold,
                 size: 20,
               ),
             ),
