@@ -10,6 +10,8 @@ class ProfileModel {
     this.uid,
     this.avatar,
     this.nickname,
+    this.gender,
+    this.motto,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -19,27 +21,33 @@ class ProfileModel {
   String? uid;
   String? avatar;
   String? nickname;
+  String? gender;
+  String? motto;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
-    id: json["id"],
-    uid: json["uid"],
-    avatar: json["avatar"],
-    nickname: json["nickname"],
-    createdAt: json["createdAt"],
-    updatedAt: json["updatedAt"],
-    deletedAt: json["deletedAt"],
+    id: json['id'],
+    uid: json['uid'],
+    avatar: json['avatar'],
+    nickname: json['nickname'],
+    gender: json['gender'],
+    motto: json['motto'],
+    createdAt: json['createdAt'],
+    updatedAt: json['updatedAt'],
+    deletedAt: json['deletedAt'],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "uid": uid,
-    "avatar": avatar,
-    "nickname": nickname,
-    "createdAt": createdAt,
-    "updatedAt": updatedAt,
-    "deletedAt": deletedAt,
+    'id': id,
+    'uid': uid,
+    'avatar': avatar,
+    'nickname': nickname,
+    'gender': gender,
+    'motto': motto,
+    'createdAt': createdAt,
+    'updatedAt': updatedAt,
+    'deletedAt': deletedAt,
   };
 }

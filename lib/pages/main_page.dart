@@ -60,8 +60,6 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AAppBar(title: S.current.appName),
-      extendBodyBehindAppBar: true,
       extendBody: true,
       body: TabBarView(
         controller: tabController,

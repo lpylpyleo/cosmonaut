@@ -136,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 obscureText: obscure,
                 onChanged: onChanged,
+                onFieldSubmitted: (_) => _onLoginPress(),
                 style: const TextStyle(
                   fontSize: 16,
                   letterSpacing: 1,

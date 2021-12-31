@@ -3,25 +3,31 @@ import 'dart:convert';
 import 'package:cosmonaut/utils/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
+import 'package:http_parser/http_parser.dart';
 
 typedef Parser<T> = T Function(dynamic);
 
 class HttpClient {
+  HttpClient._();
+
+  factory HttpClient() => _instance;
+  static final HttpClient _instance = HttpClient._();
+
+  static HttpClient get instance => _instance;
+
   // Note: [_client] is never closed.
-  static final _CosmonautClient _client = _CosmonautClient(http.Client());
+  static final _CosmonautClient _client = _CosmonautClient(
+    // TODO: configure RetryClient
+    RetryClient(
+      http.Client(),
+    ),
+  );
   static final baseUrl = Uri.parse('http://106.15.196.195:8199');
 
   List<void Function(http.BaseRequest)> beforeRequestCallback = _client.beforeRequestCallback;
   List<void Function(http.StreamedResponse)> afterResponseCallback = _client.afterResponseCallback;
   List<CosmonautClientErrorHandler> onErrorCallback = _client.onErrorCallback;
-
-  HttpClient._();
-
-  factory HttpClient() => _instance;
-
-  static final HttpClient _instance = HttpClient._();
-
-  static HttpClient get instance => _instance;
 
   Future<T> get<T>(
     String path,
@@ -42,9 +48,52 @@ class HttpClient {
   }) async {
     final res = await _client.post(
       baseUrl.replace(path: path, queryParameters: queryParameters),
-      body: data?.map((key, value) => MapEntry(key, value.toString())),
+      body: data?.map((key, value) => MapEntry(key, value.toString())), // value must be string.
     );
     return parser(res.utf8Body);
+  }
+
+  // TODO: support multiple files to upload.
+  Future<T> upload<T>(
+    String path,
+    Parser<T> parser,
+    String field,
+    String filePath, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+    MediaType? contentType,
+  }) async {
+    final request = http.MultipartRequest('POST', baseUrl.replace(path: path));
+    if (data != null) {
+      request.fields.addAll(data.map((key, value) => MapEntry(key, value.toString())));
+    }
+
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        field,
+        filePath,
+        contentType: contentType ?? _guessMediaTypeFrom(filePath),
+      ),
+    );
+    var streamedResponse = await _client.send(request);
+    if (streamedResponse.statusCode == 200) {
+      logger.fine('UPLOAD: $baseUrl$path SUCCESS.');
+      final response = await http.Response.fromStream(streamedResponse);
+
+      return parser(response.utf8Body);
+    }
+
+    throw CosmonautClientError(streamedResponse.statusCode);
+  }
+
+  MediaType _guessMediaTypeFrom(String filename) {
+    var f = filename.toLowerCase();
+
+    if (f.endsWith('png')) return MediaType('image', 'png');
+    if (f.endsWith('jpg') || f.endsWith('jpeg')) return MediaType('image', 'jpg');
+    if (f.endsWith('gif')) return MediaType('image', 'gif');
+
+    return MediaType('application', 'octet-stream');
   }
 }
 
@@ -107,7 +156,7 @@ class CosmonautClientError {
   }
 }
 
-// FIXME: When there is no charset present in `Content-Type`, body will use wrong encoding.
+// FIXME: When there is no charset present in `Content-Type`, body decoding will not use utf-8.
 // https://github.com/dart-lang/http/issues/175
 extension HttpResponseExtension on http.Response {
   String get utf8Body => utf8.decode(bodyBytes);

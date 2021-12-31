@@ -1,8 +1,11 @@
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/model.dart';
 import 'package:cosmonaut/data/provider.dart';
+import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/time.dart';
+import 'package:cosmonaut/widgets/a_app_bar.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
+import 'package:cosmonaut/widgets/gap.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -26,22 +29,26 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
     const sep = SizedBox(height: 16);
-    final mediaQuery = MediaQuery.of(context);
 
-    return Consumer<PostNotifier>(
-      builder: (context, provider, child) {
-        final posts = provider.posts;
-        return ListView.separated(
-          primary: true,
-          padding: mediaQuery.padding + const EdgeInsets.all(16.0),
-          itemCount: posts.length,
-          separatorBuilder: (_, __) => sep,
-          itemBuilder: (BuildContext context, int index) {
-            final post = posts[index];
-            return _PostItem(post: post);
-          },
-        );
-      },
+    return Scaffold(
+      appBar: AAppBar(title: S.current.appName),
+      extendBodyBehindAppBar: true,
+      body: Consumer<PostNotifier>(
+        builder: (context, provider, child) {
+          final mediaQuery = MediaQuery.of(context);
+          final posts = provider.posts;
+          return ListView.separated(
+            primary: true,
+            padding: mediaQuery.padding + const EdgeInsets.all(16.0),
+            itemCount: posts.length,
+            separatorBuilder: (_, __) => sep,
+            itemBuilder: (BuildContext context, int index) {
+              final post = posts[index];
+              return _PostItem(post: post);
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -63,7 +70,7 @@ class _PostItem extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: AppBorderRadius.small,
+        borderRadius: AppBorderRadius.medium,
         boxShadow: const [
           BoxShadow(
             color: Colors.black38,
@@ -81,10 +88,11 @@ class _PostItem extends StatelessWidget {
                 post.avatar ?? '',
                 cache: true,
                 width: 54,
+                height: 54,
+                fit: BoxFit.fill,
                 shape: BoxShape.circle,
-                border: Border.all(color: AppPalette.gold),
               ),
-              const SizedBox(width: 16.0),
+              const Gap(16.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -92,7 +100,7 @@ class _PostItem extends StatelessWidget {
                     post.nickname ?? '',
                     fontSize: 18,
                   ),
-                  const SizedBox(height: 8.0),
+                  const Gap(8.0),
                   AText(
                     dateTimeFormat.format(DateTime.parse(
                       post.createdAt ?? DateTime.now().toIso8601String(),
@@ -105,7 +113,7 @@ class _PostItem extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16.0),
+          const Gap(16.0),
           AText(
             post.content ?? '',
             fontSize: 18,

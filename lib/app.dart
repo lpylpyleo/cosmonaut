@@ -3,6 +3,7 @@ import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/provider.dart';
 import 'package:cosmonaut/generated/l10n.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
           platform: TargetPlatform.iOS,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.black,
+          ),
+          cupertinoOverrideTheme: const CupertinoThemeData(
+            primaryColor: AppPalette.gold,
+            textTheme: CupertinoTextThemeData()
           ),
           iconTheme: const IconThemeData(
             color: AppPalette.gold,

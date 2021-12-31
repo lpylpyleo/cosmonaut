@@ -1,5 +1,9 @@
 class HttpUtil {
   HttpUtil._();
 
-  static bool emptyResponse(dynamic data) => data == '';
+  // TODO: wrap Error
+  static bool emptyResponse(dynamic data) {
+    if (data == '') return true;
+    throw data;
+  }
 }
