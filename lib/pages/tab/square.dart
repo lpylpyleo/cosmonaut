@@ -1,4 +1,5 @@
 import 'package:cosmonaut/core/styles.dart';
+import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/data/model.dart';
 import 'package:cosmonaut/data/provider.dart';
 import 'package:cosmonaut/generated/l10n.dart';
@@ -8,6 +9,7 @@ import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:cosmonaut/widgets/gap.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:cosmonaut/extension.dart';
 
@@ -56,13 +58,19 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
   bool get wantKeepAlive => true;
 }
 
-class _PostItem extends StatelessWidget {
+class _PostItem extends StatefulWidget {
   final PostModel post;
 
   const _PostItem({Key? key, required this.post}) : super(key: key);
 
   @override
+  _PostItemState createState() => _PostItemState();
+}
+
+class _PostItemState extends State<_PostItem> {
+  @override
   Widget build(BuildContext context) {
+    final post = widget.post;
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 12.0,
@@ -127,9 +135,18 @@ class _PostItem extends StatelessWidget {
                 onPressed: () {},
                 icon: const Icon(LineIcons.comment),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(LineIcons.heart),
+              LikeButton(
+                isLiked: post.liked,
+                onTap: (v) async {
+                  await Api.post.like(post.id!, !(post.liked ?? false));
+                  return !v;
+                },
+                likeBuilder: (like) {
+                  if (like) {
+                    return const Icon(Icons.favorite);
+                  }
+                  return const Icon(Icons.favorite_border);
+                },
               ),
             ],
           ),

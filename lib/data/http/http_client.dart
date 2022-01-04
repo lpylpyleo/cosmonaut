@@ -116,7 +116,10 @@ class _CosmonautClient extends http.BaseClient {
       // TODO: Define which codes should be considered an error.
       // TODO: Support 30X redirection.
       if (response.statusCode >= 400) {
-        throw CosmonautClientError(response.statusCode);
+        throw CosmonautClientError(
+          response.statusCode,
+          (await http.Response.fromStream(response)).utf8Body,
+        );
       }
 
       if (!kDebugMode) return response;

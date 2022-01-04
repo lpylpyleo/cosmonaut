@@ -81,15 +81,17 @@ class _CreatePostPageState extends State<CreatePostPage> {
               vertical: 8,
               horizontal: 16,
             ),
-            child: Row(
-              children: tools
-                  .map(
-                    (e) => IconButton(
-                      onPressed: e.onTap,
-                      icon: Icon(e.icon),
-                    ),
-                  )
-                  .toList(),
+            child: SafeArea(
+              child: Row(
+                children: tools
+                    .map(
+                      (e) => IconButton(
+                        onPressed: e.onTap,
+                        icon: Icon(e.icon),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           )
         ],

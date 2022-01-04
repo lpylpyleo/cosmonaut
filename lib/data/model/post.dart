@@ -18,6 +18,9 @@ class PostModel {
     this.uid,
     this.avatar,
     this.nickname,
+    this.commentCount,
+    this.likeCount,
+    this.liked,
   });
 
   int? id;
@@ -31,32 +34,41 @@ class PostModel {
   String? uid;
   String? avatar;
   String? nickname;
+  int? commentCount;
+  int? likeCount;
+  bool? liked;
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
-        id: json["id"],
-        creator: json["creator"],
-        title: json["title"],
-        content: json["content"],
-        isPublic: json["isPublic"],
-        createdAt: json["createdAt"],
-        updatedAt: json["updatedAt"],
-        deletedAt: json["deletedAt"],
-        uid: json["uid"],
-        avatar: json["avatar"],
-        nickname: json["nickname"],
+        id: json['id'],
+        creator: json['creator'],
+        title: json['title'],
+        content: json['content'],
+        isPublic: json['isPublic'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
+        deletedAt: json['deletedAt'],
+        uid: json['uid'],
+        avatar: json['avatar'],
+        nickname: json['nickname'],
+        commentCount: json['commentCount'],
+        likeCount: json['likeCount'],
+        liked: json['liked'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "creator": creator,
-        "title": title,
-        "content": content,
-        "isPublic": isPublic,
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
-        "deletedAt": deletedAt,
-        "uid": uid,
-        "avatar": avatar,
-        "nickname": nickname,
+        'id': id,
+        'creator': creator,
+        'title': title,
+        'content': content,
+        'isPublic': isPublic,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        'deletedAt': deletedAt,
+        'uid': uid,
+        'avatar': avatar,
+        'nickname': nickname,
+        'commentCount': commentCount,
+        'likeCount': likeCount,
+        'liked': liked,
       };
 }

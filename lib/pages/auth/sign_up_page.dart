@@ -3,6 +3,7 @@ import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/generated/l10n.dart';
 import 'package:cosmonaut/utils/error_handler.dart';
+import 'package:cosmonaut/utils/logger.dart';
 import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:flutter/material.dart';
@@ -170,9 +171,14 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _onSignUpPress() async {
-    await Api.auth.signUp(
-      email.trim().toLowerCase(),
-      password.trim(),
-    ).then((v) {}).catchError(defaultApiErrorHandler).whenComplete(() => btnController.reset());
+    try {
+      await Api.auth.signUp(email.trim().toLowerCase(), password.trim());
+      goToNamed(Routes.login, replace: true);
+    } catch (e) {
+      logger.severe(e);
+      defaultApiErrorHandler(e);
+    } finally {
+      btnController.reset();
+    }
   }
 }
