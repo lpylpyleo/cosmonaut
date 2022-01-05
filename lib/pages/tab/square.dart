@@ -46,7 +46,10 @@ class _SquareTabState extends State<SquareTab> with AutomaticKeepAliveClientMixi
             separatorBuilder: (_, __) => sep,
             itemBuilder: (BuildContext context, int index) {
               final post = posts[index];
-              return _PostItem(post: post);
+              return _PostItem(
+                key: ValueKey(post.id),
+                post: post,
+              );
             },
           );
         },
@@ -68,9 +71,19 @@ class _PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<_PostItem> {
+  late bool liked;
+
+  @override
+  void initState() {
+    super.initState();
+    liked = widget.post.liked ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final post = widget.post;
+    final profile = context.watch<ProfileNotifier>().profile;
+    final isMe = profile?.uid == post.uid;
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 12.0,
@@ -101,23 +114,30 @@ class _PostItemState extends State<_PostItem> {
                 shape: BoxShape.circle,
               ),
               const Gap(16.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AText(
-                    post.nickname ?? '',
-                    fontSize: 18,
-                  ),
-                  const Gap(8.0),
-                  AText(
-                    dateTimeFormat.format(DateTime.parse(
-                      post.createdAt ?? DateTime.now().toIso8601String(),
-                    )),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 0.5,
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AText(
+                      (isMe ? profile?.nickname : post.nickname) ?? '',
+                      fontSize: 18,
+                    ),
+                    const Gap(8.0),
+                    AText(
+                      dateTimeFormat.format(DateTime.parse(
+                        post.createdAt ?? DateTime.now().toIso8601String(),
+                      )),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.5,
+                    ),
+                  ],
+                ),
+              ),
+              const Gap(16.0),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(LineIcons.horizontalEllipsis),
               ),
             ],
           ),
@@ -127,18 +147,19 @@ class _PostItemState extends State<_PostItem> {
             fontSize: 18,
             height: 1.6,
           ),
-          const SizedBox(height: 8.0),
+          const Gap(8.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(LineIcons.comment),
+                icon: const Icon(LineIcons.commentDots),
               ),
               LikeButton(
-                isLiked: post.liked,
+                isLiked: liked,
                 onTap: (v) async {
-                  await Api.post.like(post.id!, !(post.liked ?? false));
+                  await Api.post.like(post.id!, !liked);
+                  liked = !liked;
                   return !v;
                 },
                 likeBuilder: (like) {
@@ -146,6 +167,13 @@ class _PostItemState extends State<_PostItem> {
                     return const Icon(Icons.favorite);
                   }
                   return const Icon(Icons.favorite_border);
+                },
+                likeCount: post.likeCount,
+                countBuilder: (count, liked, text) {
+                  return AText(
+                    text,
+                    fontSize: 16,
+                  );
                 },
               ),
             ],

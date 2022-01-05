@@ -84,17 +84,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   Future<void> edit() async {
     try {
-      final res = await Api.profile.editProfile(
-        nickname: nickname,
-        motto: motto,
-      );
-      if (res) {
-        Api.profile.get().then((value) => context.read<ProfileNotifier>().set(value));
-        showDialog(context: context, builder: (_) => const ADialog(title: 'Edit Success'));
-        goBack();
-      } else {
-        showDialog(context: context, builder: (_) => const ADialog(title: 'Edit Failed'));
-      }
+      await Api.profile.editProfile(nickname: nickname, motto: motto);
+      final p = await Api.profile.get();
+      context.read<ProfileNotifier>().set(p);
+      await showDialog(context: context, builder: (_) => const ADialog(title: 'Edit Success'));
+      goBack();
     } catch (e) {
       logger.severe(e);
       showDialog(context: context, builder: (_) => const ADialog(title: 'Edit Failed'));
