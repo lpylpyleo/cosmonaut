@@ -106,7 +106,7 @@ class _PostItemState extends State<_PostItem> {
           Row(
             children: [
               ExtendedImage.network(
-                post.avatar ?? '',
+                (isMe ? profile?.avatar : post.avatar) ?? '',
                 cache: true,
                 width: 54,
                 height: 54,

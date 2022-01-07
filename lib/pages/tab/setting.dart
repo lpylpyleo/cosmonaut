@@ -105,11 +105,10 @@ class _SettingTabState extends State<SettingTab> {
     try {
       final file = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (file != null) {
-        final result = await Api.profile.changeAvatar(file.path);
-        if (result) {
-          Api.profile.get().then((value) => context.read<ProfileNotifier>().set(value));
-          showDialog(context: context, builder: (_) => const ADialog(title: '更换成功'));
-        }
+        await Api.profile.changeAvatar(file.path);
+        final value = await Api.profile.get();
+        context.read<ProfileNotifier>().set(value);
+        showDialog(context: context, builder: (_) => const ADialog(title: '更换成功'));
       }
     } catch (e) {
       logger.severe(e);
