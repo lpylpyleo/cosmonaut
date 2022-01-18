@@ -1,6 +1,6 @@
+import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/generated/l10n.dart';
-import 'package:cosmonaut/utils/navigation.dart';
 import 'package:flutter/material.dart';
 
 import 'a_text.dart';

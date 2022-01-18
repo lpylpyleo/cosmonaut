@@ -2,7 +2,6 @@ import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/data/provider.dart';
 import 'package:cosmonaut/utils/logger.dart';
-import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:cosmonaut/widgets/a_text.dart';
 import 'package:cosmonaut/widgets/gap.dart';

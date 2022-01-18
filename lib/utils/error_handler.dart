@@ -7,7 +7,7 @@ import 'package:cosmonaut/core/constants.dart';
 
 import 'logger.dart';
 
-FutureOr<Null> defaultApiErrorHandler(dynamic error) {
+FutureOr defaultApiErrorHandler(dynamic error) {
   late String msg;
   if (error is DioError && error.type == DioErrorType.response) {
     final data = error.response?.data;

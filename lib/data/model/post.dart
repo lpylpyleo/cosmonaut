@@ -1,7 +1,9 @@
 part of '../model.dart';
 
-List<PostModel> postModelFromJson(String str) =>
+List<PostModel> postModelListFromJson(String str) =>
     List<PostModel>.from((json.decode(str) ?? []).map((x) => PostModel.fromJson(x)));
+
+PostModel postModelFromJson(String str) => PostModel.fromJson((json.decode(str)));
 
 String postModelToJson(List<PostModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

@@ -46,7 +46,7 @@ void main() async {
 List<ApiConfig> getApiConfigs(HttpClient client) => [
       ApiConfig(
         filename: 'posts',
-        request: Api.post.get(),
+        request: Api.post.getAll(),
       ),
     ];
 

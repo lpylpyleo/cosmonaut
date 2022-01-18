@@ -1,7 +1,7 @@
+import 'package:cosmonaut/core/router.dart';
 import 'package:cosmonaut/core/styles.dart';
 import 'package:cosmonaut/data/api.dart';
 import 'package:cosmonaut/generated/l10n.dart';
-import 'package:cosmonaut/utils/navigation.dart';
 import 'package:cosmonaut/widgets/a_app_bar.dart';
 import 'package:cosmonaut/widgets/a_dialog.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 builder: (BuildContext context) => const ADialog(title: 'Empty'),
               );
             }
-            Api.post.create(content.value).then((_) => goBack());
+            await Api.post.create(content.value);
+            goBack();
           },
           child: const Icon(
             LineIcons.telegramPlane,

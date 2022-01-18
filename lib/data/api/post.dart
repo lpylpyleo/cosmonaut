@@ -12,10 +12,17 @@ class Post {
     );
   }
 
-  Future<List<PostModel>> get() async {
+  Future<PostModel> getOne(int id) async {
+    return HttpClient.instance.get(
+      '/api/v1/post/$id',
+      (v) => postModelFromJson(v),
+    );
+  }
+
+  Future<List<PostModel>> getAll() async {
     return HttpClient.instance.get(
       '/api/v1/post',
-      (v) => postModelFromJson(v),
+      (v) => postModelListFromJson(v),
     );
   }
 
