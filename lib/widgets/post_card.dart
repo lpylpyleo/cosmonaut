@@ -126,8 +126,9 @@ class _PostCardState extends State<PostCard> {
             ShimmerWrapper(
               shouldShimmer: shouldShimmer,
               shimmer: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  ShimmerRect(width: 180, height: 20),
+                  ShimmerRect(width: 200, height: 20),
                   Gap(16.0),
                   ShimmerRect(width: 100, height: 20),
                 ],

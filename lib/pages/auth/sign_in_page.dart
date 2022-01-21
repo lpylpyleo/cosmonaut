@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final v = await Api.auth.signIn(email.trim().toLowerCase(), password.trim());
       logger.fine(v);
-      Navigator.of(context).pushNamed(Routes.main);
+      goToNamed(Routes.main, replace: true);
     } catch (e) {
       defaultApiErrorHandler(e);
     } finally {

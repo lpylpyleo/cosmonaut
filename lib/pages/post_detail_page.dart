@@ -20,9 +20,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
   @override
   void initState() {
     super.initState();
-    Api.post.getOne(widget.postId).then((value) => setState(() {
-          post = value;
-        }));
+    Api.post.getOne(widget.postId).then((value) => setState(() => post = value));
   }
 
   @override

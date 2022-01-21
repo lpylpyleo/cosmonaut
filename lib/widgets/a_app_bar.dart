@@ -21,6 +21,7 @@ class AAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     const actionWidth = 80.0;
+    final route = ModalRoute.of(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Stack(
@@ -46,9 +47,7 @@ class AAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Container(
                       width: actionWidth,
                       alignment: Alignment.centerLeft,
-                      child: Center(
-                        child: leading,
-                      ),
+                      child: leading ?? ((route?.canPop ?? false) ? const BackButton() : Container()),
                     ),
                     Center(
                       child: AText(
